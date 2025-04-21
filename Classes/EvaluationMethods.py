@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('TkAgg')
 import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
@@ -159,23 +161,36 @@ class EvaluationMethods:
     column1 (str): The name of the first column with string labels.
     column2 (str): The name of the second column with string labels.
     """
+    # def plot_heatmap(self, original_column, prediction_column):
+    #     data = pd.read_csv(self.pre_path + self.dataset_path)
+    #     cross_tab = pd.crosstab(data[original_column], data[prediction_column])
+    #     plt.figure(figsize=(10, 8))
+    #     sns.heatmap(cross_tab, annot=True, fmt='d', cmap='YlGnBu')
+    #     plt.title(f'Heatmap of {original_column} vs. {prediction_column}')
+    #     plt.xlabel(prediction_column)
+    #     plt.ylabel(original_column)
+    #     plt.show()
     def plot_heatmap(self, original_column, prediction_column):
+        output_path = prediction_column + '.png'
         data = pd.read_csv(self.pre_path + self.dataset_path)
         cross_tab = pd.crosstab(data[original_column], data[prediction_column])
+
         plt.figure(figsize=(10, 8))
         sns.heatmap(cross_tab, annot=True, fmt='d', cmap='YlGnBu')
         plt.title(f'Heatmap of {original_column} vs. {prediction_column}')
         plt.xlabel(prediction_column)
         plt.ylabel(original_column)
-        plt.show()
+        plt.tight_layout()  # Ensures labels/titles fit
+        plt.savefig('../Plots/' + output_path)
+        plt.close()  # Close the figure to free up memory
 
 
 # Example Usage
 # Instantiate the DatasetMethods class by providing the (dataset_path)
 # EVM = EvaluationMethods(dataset_path='../Datasets/test_set.csv')
-# EVM = EvaluationMethods(dataset_path='../ResNet/Datasets/test_set_100_with_predictions.csv')
-# EVM = EvaluationMethods(dataset_path='../ResNet/Datasets/test_set_200_with_predictions.csv')
-# EVM = EvaluationMethods(dataset_path='../ResNet/Datasets/test_set_400_with_predictions.csv')
+# EVM = EvaluationMethods(dataset_path='../ResNet-ConvNeXt/Datasets/test_set_400_predictions.csv')
+# EVM = EvaluationMethods(dataset_path='../ResNet-ConvNeXt/Datasets/test_set_200_predictions.csv')
+# EVM = EvaluationMethods(dataset_path='../ResNet-ConvNeXt/Datasets/test_set_100_predictions.csv')
 
 # # Count correct predictions
 # print(str(EVM.count_matching_rows('Category', 'GPT-4o-Resolution-400')))
@@ -187,7 +202,8 @@ class EvaluationMethods:
 # print(f'Phase-2-Resolution-400: ' + str(EVM.evaluate_results('Category', 'Phase-2-Resolution-400', 'Phase-2-Resolution-400')))
 # print(f'Phase-3-Resolution-400: ' + str(EVM.evaluate_results('Category', 'Phase-3-Resolution-400', 'Phase-3-Resolution-400')))
 # print(f'Phase-4-Resolution-400: ' + str(EVM.evaluate_results('Category', 'Phase-4-Resolution-400', 'Phase-4-Resolution-400')))
-# print(f'ResNet50-400-Predictions: ' + str(EVM.evaluate_results('Category', 'ResNet50-Predictions', 'ResNet50-Predictions')))
+# print(f'ResNet-50-Predictions-400: ' + str(EVM.evaluate_results('Category', 'ResNet-50-Predictions-400', 'ResNet-50-Predictions-400')))
+# print(f'ConvNeXt-tiny-Predictions-400: ' + str(EVM.evaluate_results('Category', 'ConvNeXt-tiny-Predictions-400', 'ConvNeXt-tiny-Predictions-400')))
 
 # print(f'GPT-4o-Resolution-200: ' + str(EVM.evaluate_results('Category', 'GPT-4o-Resolution-200', 'GPT-4o-Resolution-200')))
 # print(f'GPT-4o-mini-Resolution-200: ' + str(EVM.evaluate_results('Category', 'GPT-4o-mini-Resolution-200', 'GPT-4o-mini-Resolution-200')))
@@ -195,7 +211,8 @@ class EvaluationMethods:
 # print(f'Phase-2-Resolution-200: ' + str(EVM.evaluate_results('Category', 'Phase-2-Resolution-200', 'Phase-2-Resolution-200')))
 # print(f'Phase-3-Resolution-200: ' + str(EVM.evaluate_results('Category', 'Phase-3-Resolution-200', 'Phase-3-Resolution-200')))
 # print(f'Phase-4-Resolution-200: ' + str(EVM.evaluate_results('Category', 'Phase-4-Resolution-200', 'Phase-4-Resolution-200')))
-# print(f'ResNet50-200-Predictions: ' + str(EVM.evaluate_results('Category', 'ResNet50-Predictions', 'ResNet50-Predictions')))
+# print(f'ResNet-50-Predictions-200: ' + str(EVM.evaluate_results('Category', 'ResNet-50-Predictions-200', 'ResNet-50-Predictions-200')))
+# print(f'ConvNeXt-tiny-Predictions-200: ' + str(EVM.evaluate_results('Category', 'ConvNeXt-tiny-Predictions-200', 'ConvNeXt-tiny-Predictions-200')))
 
 # print(f'GPT-4o-Resolution-100: ' + str(EVM.evaluate_results('Category', 'GPT-4o-Resolution-100', 'GPT-4o-Resolution-100')))
 # print(f'GPT-4o-mini-Resolution-100: ' + str(EVM.evaluate_results('Category', 'GPT-4o-mini-Resolution-100', 'GPT-4o-mini-Resolution-100')))
@@ -203,7 +220,8 @@ class EvaluationMethods:
 # print(f'Phase-2-Resolution-100: ' + str(EVM.evaluate_results('Category', 'Phase-2-Resolution-100', 'Phase-2-Resolution-100')))
 # print(f'Phase-3-Resolution-100: ' + str(EVM.evaluate_results('Category', 'Phase-3-Resolution-100', 'Phase-3-Resolution-100')))
 # print(f'Phase-4-Resolution-100: ' + str(EVM.evaluate_results('Category', 'Phase-4-Resolution-100', 'Phase-4-Resolution-100')))
-# print(f'ResNet50-100-Predictions: ' + str(EVM.evaluate_results('Category', 'ResNet50-Predictions', 'ResNet50-Predictions')))
+# print(f'ResNet-50-Predictions-100: ' + str(EVM.evaluate_results('Category', 'ResNet-50-Predictions-100', 'ResNet-50-Predictions-100')))
+# print(f'ConvNeXt-tiny-Predictions-100: ' + str(EVM.evaluate_results('Category', 'ConvNeXt-tiny-Predictions-100', 'ConvNeXt-tiny-Predictions-100')))
 
 # print(f'Low-to-Higher-Trained-100-Prediction-400: ' + str(EVM.evaluate_results('Category', 'Low-to-Higher-Trained-100-Prediction-400', 'Low-to-Higher-Trained-100-Prediction-400')))
 # print(f'Low-to-Higher-Trained-200-Prediction-400: ' + str(EVM.evaluate_results('Category', 'Low-to-Higher-Trained-200-Prediction-400', 'Low-to-Higher-Trained-200-Prediction-400')))
@@ -211,38 +229,7 @@ class EvaluationMethods:
 # print(f'High-to-Lower-Trained-200-Prediction-100: ' + str(EVM.evaluate_results('Category', 'High-to-Lower-Trained-200-Prediction-100', 'High-to-Lower-Trained-200-Prediction-100')))
 # print(f'High-to-Lower-Trained-400-Prediction-100: ' + str(EVM.evaluate_results('Category', 'High-to-Lower-Trained-400-Prediction-100', 'High-to-Lower-Trained-400-Prediction-100')))
 
-# Create scatterplots
-# print(EVM.scatterplot(original_column='Spam', prediction_column='gpt_bm_prediction'))
-# print(EVM.scatterplot(original_column='Spam', prediction_column='gpt_ft_prediction'))
-# print(EVM.scatterplot(original_column='Spam', prediction_column='roberta_ft_adamw'))
-# print(EVM.scatterplot(original_column='Spam', prediction_column='roberta_ft_adam'))
-
-# Create histograms
-# EVM.plot_histograms(original_column='Spam', prediction_column='gpt_bm_prediction')
-
-# Create confusion matrix
-# EVM.plot_confusion_matrix(original_column='Spam', prediction_column='gpt_bm_prediction')
-# EVM.plot_confusion_matrix(original_column='Spam', prediction_column='gpt_ft_prediction')
-# EVM.plot_confusion_matrix(original_column='Spam', prediction_column='roberta_ft_adamw')
-# EVM.plot_confusion_matrix(original_column='Spam', prediction_column='roberta_ft_adam')
-
-# Plot a stacked bar chart showing the distribution of labels across categories in two columns
-# print(EVM.plot_stacked_bar_chart(original_column='sentiment', prediction_column='gpt_bm_prediction'))
-# print(EVM.plot_stacked_bar_chart(original_column='sentiment', prediction_column='gpt_ft_prediction'))
-# print(EVM.plot_stacked_bar_chart(original_column='sentiment', prediction_column='bert__adamw_ft_prediction'))
-# print(EVM.plot_stacked_bar_chart(original_column='sentiment', prediction_column='bert__adam_ft_prediction'))
-
-# Plot a grouped bar chart showing the relationship between labels in two columns
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='gpt_bm_prediction'))
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='gpt_ft_prediction'))
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='bert__adamw_ft_prediction'))
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='bert__adam_ft_prediction'))
-
-# Plot a heatmap showing relationships and patterns between label categories in two columns
-# print(EVM.plot_heatmap(original_column='sentiment', prediction_column='gpt_bm_prediction'))
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='gpt_ft_prediction'))
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='bert__adamw_ft_prediction'))
-# print(EVM.plot_grouped_bar_chart(original_column='sentiment', prediction_column='bert__adam_ft_prediction'))
-
-
-
+# Create Heatmaps
+# EVM.plot_heatmap('Category', 'Phase-4-Resolution-400')
+# EVM.plot_heatmap('Category', 'ResNet-50-Predictions-400')
+# EVM.plot_heatmap('Category', 'ConvNeXt-tiny-Predictions-400')
