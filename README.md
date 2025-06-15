@@ -1,4 +1,4 @@
-# When Large Language Models Meet Computer Vision: GPT-4o Vision Model Progressive Fine-Tuning and Stress-Test
+# When Multimodal Large Language Models Meet Computer Vision: Progressive GPT Fine-Tuning and Stress Testing
 
 ## Article
 * **Journal**: [IEEE Access](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=6287639)
